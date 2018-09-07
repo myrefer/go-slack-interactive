@@ -89,6 +89,14 @@ func (s *SlackListener) handleMessageEvent(ev *slack.MessageEvent) error {
 						Text:  "Yona Yona Ale",
 						Value: "Yona Yona Ale",
 					},
+					{
+						Text:  "Plemiun Molt",
+						Value: "Plemiun Molt",
+					},
+					{
+						Text:  "Yebisu",
+						Value: "Yebisu",
+					},
 				},
 			},
 

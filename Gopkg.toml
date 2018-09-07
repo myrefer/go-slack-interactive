@@ -49,8 +49,6 @@
 ## what source location any dependent projects specify.
 # source = "https://github.com/myfork/package.git"
 
-
-
 [[constraint]]
   branch = "master"
   name = "github.com/kelseyhightower/envconfig"
@@ -58,3 +56,8 @@
 [[constraint]]
   branch = "master"
   name = "github.com/nlopes/slack"
+
+[metadata.heroku]
+  root-package = "github.com/myrefer/go-slack-interactive"
+  go-version = "1.11.0"
+  install = [ "./..." ]

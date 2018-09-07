@@ -51,10 +51,10 @@
 
 
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/kelseyhightower/envconfig"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/nlopes/slack"

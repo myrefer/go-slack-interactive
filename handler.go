@@ -53,6 +53,11 @@ func (h interactionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if message.CallbackID != "beer" {
+		log.Printf("[ERROR] Invalid callbackId: %s", message.CallbackID)
+		return
+	}
+
 	action := message.Actions[0]
 	switch action.Name {
 	case actionSelect:

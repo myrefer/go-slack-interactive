@@ -5,7 +5,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/nlopes/slack"
+	"github.com/myrefer/go-slack-interactive/slack"
+	api "github.com/nlopes/slack"
 )
 
 const (
@@ -16,7 +17,7 @@ const (
 )
 
 type SlackListener struct {
-	client    *slack.Client
+	client    *api.Client
 	botID     string
 	channelID string
 }
@@ -32,7 +33,7 @@ func (s *SlackListener) ListenAndResponse() {
 	// Handle slack events
 	for msg := range rtm.IncomingEvents {
 		switch ev := msg.Data.(type) {
-		case *slack.MessageEvent:
+		case *api.MessageEvent:
 			if err := s.handleMessageEvent(ev); err != nil {
 				log.Printf("[ERROR] Failed to handle message: %s", err)
 			}
@@ -41,7 +42,7 @@ func (s *SlackListener) ListenAndResponse() {
 }
 
 // handleMesageEvent handles message events.
-func (s *SlackListener) handleMessageEvent(ev *slack.MessageEvent) error {
+func (s *SlackListener) handleMessageEvent(ev *api.MessageEvent) error {
 	// Only response in specific channel. Ignore else.
 	if ev.Channel != s.channelID {
 		log.Printf("%s %s", ev.Channel, ev.Msg.Text)
@@ -54,21 +55,25 @@ func (s *SlackListener) handleMessageEvent(ev *slack.MessageEvent) error {
 	}
 
 	// Parse message
-	m := strings.Split(strings.TrimSpace(ev.Msg.Text), " ")[1:]
-	if len(m) == 0 || m[0] != "hey" {
-		return fmt.Errorf("invalid message")
-	}
+	mux := slack.NewServeMux()
+	mux.Handle("hey", slack.HandlerFunc(Hey))
+	mux.ServeMessage(ev, s.client)
 
+	return nil
+}
+
+func Hey(ev *api.MessageEvent, client *api.Client) {
+	log.Printf("Start Hey")
 	// value is passed to message handler when request is approved.
-	attachment := slack.Attachment{
+	attachment := api.Attachment{
 		Text:       "Which beer do you want? :beer:",
 		Color:      "#f9a41b",
 		CallbackID: "beer",
-		Actions: []slack.AttachmentAction{
+		Actions: []api.AttachmentAction{
 			{
 				Name: actionSelect,
 				Type: "select",
-				Options: []slack.AttachmentActionOption{
+				Options: []api.AttachmentActionOption{
 					{
 						Text:  "Asahi Super Dry",
 						Value: "Asahi Super Dry",
@@ -109,15 +114,14 @@ func (s *SlackListener) handleMessageEvent(ev *slack.MessageEvent) error {
 		},
 	}
 
-	params := slack.PostMessageParameters{
-		Attachments: []slack.Attachment{
+	params := api.PostMessageParameters{
+		Attachments: []api.Attachment{
 			attachment,
 		},
 	}
 
-	if _, _, err := s.client.PostMessage(ev.Channel, "", params); err != nil {
-		return fmt.Errorf("failed to post message: %s", err)
+	if _, _, err := client.PostMessage(ev.Channel, "", params); err != nil {
+		log.Printf("failed to post message: %s", err)
 	}
-
-	return nil
+	log.Printf("Succeeded to post")
 }

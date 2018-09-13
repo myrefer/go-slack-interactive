@@ -54,7 +54,7 @@ func (h interactionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if message.CallbackID != "beer" {
+	if message.CallbackID != commands.HeyCallbackID {
 		log.Printf("[ERROR] Invalid callbackId: %s", message.CallbackID)
 		return
 	}

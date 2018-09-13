@@ -8,6 +8,7 @@ import (
 // TODO: Can I use namespace ? like below:
 // HeyAction.Select
 const (
+	HeyCallbackID   = "beer"
 	HeyActionSelect = "select"
 	HeyActionStart  = "start"
 	HeyActionCancel = "cancel"
@@ -17,7 +18,7 @@ func Hey(ev *api.MessageEvent, client *api.Client) {
 	attachment := api.Attachment{
 		Text:       "Which beer do you want? :beer:",
 		Color:      "#f9a41b",
-		CallbackID: "beer",
+		CallbackID: HeyCallbackID,
 		Actions: []api.AttachmentAction{
 			{
 				Name: HeyActionSelect,

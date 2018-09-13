@@ -3,6 +3,7 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/myrefer/go-slack-interactive/slack"
 	api "github.com/nlopes/slack"
 	"log"
 	"net/http"
@@ -20,11 +21,17 @@ const (
 
 type Hey struct {
 	callbackID string
+	mux        slack.ServeInteractiveActionMux
 }
 
 func NewHey(callbackID string) *Hey {
 	h := new(Hey)
 	h.callbackID = callbackID
+
+	mux := slack.NewServeInteractiveActionMux(callbackID)
+	mux.Handle("select", slack.InteractiveActionHandlerFunc(actionSelect))
+	mux.Handle("start", slack.InteractiveActionHandlerFunc(actionStart))
+	mux.Handle("cancel", slack.InteractiveActionHandlerFunc(actionCancel))
 	return h
 }
 
@@ -87,6 +94,10 @@ func (hey *Hey) ServeMessage(ev *api.MessageEvent, client *api.Client) {
 	if _, _, err := client.PostMessage(ev.Channel, "", params); err != nil {
 		log.Printf("failed to post message: %s", err)
 	}
+}
+
+func (hey *Hey) ServeInteractiveAction(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
+	hey.mux.ServeInteractiveAction(callback, w)
 }
 
 func actionSelect(callback *api.AttachmentActionCallback, w http.ResponseWriter) {

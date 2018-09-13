@@ -8,12 +8,12 @@ import (
 	"net/url"
 
 	"github.com/myrefer/go-slack-interactive/commands"
-	slackAPI "github.com/nlopes/slack"
+	api "github.com/nlopes/slack"
 )
 
-// interactionHandler handles interactive message response.
+// interactionHandler handles interactive callback response.
 type interactionHandler struct {
-	slackClient       *slackAPI.Client
+	slackClient       *api.Client
 	verificationToken string
 }
 
@@ -38,23 +38,25 @@ func (h interactionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var message slackAPI.AttachmentActionCallback
-	if err := json.Unmarshal([]byte(jsonStr), &message); err != nil {
-		log.Printf("[ERROR] Failed to decode json message from slack: %s", jsonStr)
+	var callback api.AttachmentActionCallback
+	if err := json.Unmarshal([]byte(jsonStr), &callback); err != nil {
+		log.Printf("[ERROR] Failed to decode json callback from slack: %s", jsonStr)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	// Only accept message from slack with valid token
-	if message.Token != h.verificationToken {
-		log.Printf("[ERROR] Invalid token: %s", message.Token)
+	// Only accept callback from slack with valid token
+	if callback.Token != h.verificationToken {
+		log.Printf("[ERROR] Invalid token: %s", callback.Token)
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	if message.CallbackID != commands.HeyCallbackID {
-		log.Printf("[ERROR] Invalid callbackId: %s", message.CallbackID)
+	if callback.CallbackID != commands.HeyCallbackID {
+		log.Printf("[ERROR] Invalid callbackId: %s", callback.CallbackID)
 		return
 	}
 
+	hey := commands.NewHey(callback.CallbackID)
+	hey.ServeInteractiveAction(&callback, w)
 }

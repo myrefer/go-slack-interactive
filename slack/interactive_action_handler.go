@@ -31,8 +31,8 @@ var DefaultServeInteractiveActionMux = &defaultServeInteractiveActionMux
 
 var defaultServeInteractiveActionMux ServeInteractiveActionMux
 
-func (mux *ServeInteractiveActionMux) match(text string) (h InteractiveActionHandler, pattern string) {
-	v, ok := mux.m[pattern]
+func (mux *ServeInteractiveActionMux) match(name string) (h InteractiveActionHandler, pattern string) {
+	v, ok := mux.m[name]
 	if ok {
 		return v.h, v.pattern
 	}
@@ -42,7 +42,7 @@ func (mux *ServeInteractiveActionMux) match(text string) (h InteractiveActionHan
 
 func (mux *ServeInteractiveActionMux) InteractiveActionHandler(callback *api.AttachmentActionCallback, w http.ResponseWriter) (h InteractiveActionHandler, pattern string) {
 	action := callback.Actions[0]
-	log.Printf("[INFO] callback is %s", action.Name)
+	log.Printf("[INFO] callback is %s %d", action.Name, len(mux.m))
 	h, pattern = mux.match(action.Name)
 
 	if h == nil {
@@ -68,6 +68,7 @@ func (mux *ServeInteractiveActionMux) Handle(pattern string, handler Interactive
 		mux.m = make(map[string]interactiveActionMuxEntry)
 	}
 	mux.m[pattern] = interactiveActionMuxEntry{h: handler, pattern: pattern}
+	log.Printf("[INFO] add pattern %s (%d)", pattern, len(mux.m))
 }
 
 func (mux *ServeInteractiveActionMux) ServeInteractiveAction(callback *api.AttachmentActionCallback, w http.ResponseWriter) {

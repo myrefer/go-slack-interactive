@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/myrefer/go-slack-interactive/commands"
-	"github.com/myrefer/go-slack-interactive/slack"
+	"github.com/myrefer/go-slack-interactive/slack/message"
 	api "github.com/nlopes/slack"
 )
 

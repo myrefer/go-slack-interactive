@@ -49,7 +49,7 @@ func (s *SlackListener) handleMessageEvent(ev *api.MessageEvent) error {
 	}
 
 	// Parse message
-	mux := slack.NewServeMux()
+	mux := slack.NewServeMessageMux()
 	mux.Handle("hey", commands.NewHey(commands.HeyCallbackID))
 	mux.ServeMessage(ev, s.client)
 

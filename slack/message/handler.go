@@ -6,27 +6,27 @@ import (
 	"strings"
 )
 
-// A Handler responds to an Message
-type Handler interface {
+// A MessageHandler responds to an Message
+type MessageHandler interface {
 	ServeMessage(*api.MessageEvent, *api.Client)
 }
 
-type ServeMux struct {
+type ServeMessageMux struct {
 	m map[string]muxEntry
 }
 
 type muxEntry struct {
-	h       Handler
+	h       MessageHandler
 	pattern string
 }
 
-func NewServeMux() *ServeMux { return new(ServeMux) }
+func NewServeMessageMux() *ServeMessageMux { return new(ServeMessageMux) }
 
-var DefaultServeMux = &defaultServeMux
+var DefaultServeMessageMux = &defaultServeMessageMux
 
-var defaultServeMux ServeMux
+var defaultServeMessageMux ServeMessageMux
 
-func (mux *ServeMux) match(text string) (h Handler, pattern string) {
+func (mux *ServeMessageMux) match(text string) (h MessageHandler, pattern string) {
 	// Parse message
 	cmd := strings.Split(strings.TrimSpace(text), " ")[1:]
 	if len(cmd) == 0 {
@@ -41,19 +41,19 @@ func (mux *ServeMux) match(text string) (h Handler, pattern string) {
 	return
 }
 
-func (mux *ServeMux) Handler(ev *api.MessageEvent, client *api.Client) (h Handler, pattern string) {
+func (mux *ServeMessageMux) MessageHandler(ev *api.MessageEvent, client *api.Client) (h MessageHandler, pattern string) {
 	log.Printf("[INFO] message is %s", ev.Msg.Text)
 	h, pattern = mux.match(ev.Msg.Text)
 
 	if h == nil {
 		log.Printf("[INFO] not found pattern for %s", ev.Msg.Text)
-		h, pattern = NothingHandler(), ""
+		h, pattern = NothingMessageHandler(), ""
 	}
 
 	return
 }
 
-func (mux *ServeMux) Handle(pattern string, handler Handler) {
+func (mux *ServeMessageMux) Handle(pattern string, handler MessageHandler) {
 	if pattern == "" {
 		panic("slack: invalid pattern")
 	}
@@ -70,15 +70,15 @@ func (mux *ServeMux) Handle(pattern string, handler Handler) {
 	mux.m[pattern] = muxEntry{h: handler, pattern: pattern}
 }
 
-func (mux *ServeMux) ServeMessage(ev *api.MessageEvent, client *api.Client) {
-	h, _ := mux.Handler(ev, client)
+func (mux *ServeMessageMux) ServeMessage(ev *api.MessageEvent, client *api.Client) {
+	h, _ := mux.MessageHandler(ev, client)
 	h.ServeMessage(ev, client)
 }
 
-type HandlerFunc func(ev *api.MessageEvent, client *api.Client)
+type MessageHandlerFunc func(ev *api.MessageEvent, client *api.Client)
 
 // ServeMessage calls f(w, r).
-func (f HandlerFunc) ServeMessage(ev *api.MessageEvent, client *api.Client) {
+func (f MessageHandlerFunc) ServeMessage(ev *api.MessageEvent, client *api.Client) {
 	f(ev, client)
 }
 
@@ -89,6 +89,6 @@ func Nothing(ev *api.MessageEvent, client *api.Client) {
 	}
 }
 
-func NothingHandler() Handler {
-	return HandlerFunc(Nothing)
+func NothingMessageHandler() MessageHandler {
+	return MessageHandlerFunc(Nothing)
 }

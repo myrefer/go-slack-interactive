@@ -14,11 +14,21 @@ const (
 	HeyActionCancel = "cancel"
 )
 
-func Hey(ev *api.MessageEvent, client *api.Client) {
+type Hey struct {
+	callbackID string
+}
+
+func NewHey(callbackID string) *Hey {
+	h := new(Hey)
+	h.callbackID = callbackID
+	return h
+}
+
+func (hey *Hey) ServeMessage(ev *api.MessageEvent, client *api.Client) {
 	attachment := api.Attachment{
+		CallbackID: hey.callbackID,
 		Text:       "Which beer do you want? :beer:",
 		Color:      "#f9a41b",
-		CallbackID: HeyCallbackID,
 		Actions: []api.AttachmentAction{
 			{
 				Name: HeyActionSelect,

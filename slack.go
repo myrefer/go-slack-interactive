@@ -50,7 +50,7 @@ func (s *SlackListener) handleMessageEvent(ev *api.MessageEvent) error {
 
 	// Parse message
 	mux := slack.NewServeMux()
-	mux.Handle("hey", slack.HandlerFunc(commands.Hey))
+	mux.Handle("hey", commands.NewHey(commands.HeyCallbackID))
 	mux.ServeMessage(ev, s.client)
 
 	return nil

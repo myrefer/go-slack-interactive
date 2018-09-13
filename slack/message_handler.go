@@ -12,10 +12,10 @@ type MessageHandler interface {
 }
 
 type ServeMessageMux struct {
-	m map[string]muxEntry
+	m map[string]messageMuxEntry
 }
 
-type muxEntry struct {
+type messageMuxEntry struct {
 	h       MessageHandler
 	pattern string
 }
@@ -47,7 +47,7 @@ func (mux *ServeMessageMux) MessageHandler(ev *api.MessageEvent, client *api.Cli
 
 	if h == nil {
 		log.Printf("[INFO] not found pattern for %s", ev.Msg.Text)
-		h, pattern = NothingMessageHandler(), ""
+		h, pattern = CommandNotFoundHandler(), ""
 	}
 
 	return
@@ -65,9 +65,9 @@ func (mux *ServeMessageMux) Handle(pattern string, handler MessageHandler) {
 	}
 
 	if mux.m == nil {
-		mux.m = make(map[string]muxEntry)
+		mux.m = make(map[string]messageMuxEntry)
 	}
-	mux.m[pattern] = muxEntry{h: handler, pattern: pattern}
+	mux.m[pattern] = messageMuxEntry{h: handler, pattern: pattern}
 }
 
 func (mux *ServeMessageMux) ServeMessage(ev *api.MessageEvent, client *api.Client) {
@@ -82,13 +82,13 @@ func (f MessageHandlerFunc) ServeMessage(ev *api.MessageEvent, client *api.Clien
 	f(ev, client)
 }
 
-func Nothing(ev *api.MessageEvent, client *api.Client) {
+func CommandNotFound(ev *api.MessageEvent, client *api.Client) {
 	params := api.NewPostMessageParameters()
 	if _, _, err := client.PostMessage(ev.Channel, "Command not found :innocent:", params); err != nil {
 		log.Printf("[ERROR] failed to post message: %s", err)
 	}
 }
 
-func NothingMessageHandler() MessageHandler {
-	return MessageHandlerFunc(Nothing)
+func CommandNotFoundHandler() MessageHandler {
+	return MessageHandlerFunc(CommandNotFound)
 }

@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strings"
 
-	_ "github.com/myrefer/go-slack-interactive/slack"
+	"github.com/myrefer/go-slack-interactive/commands"
 	slackAPI "github.com/nlopes/slack"
 )
 
@@ -61,7 +61,7 @@ func (h interactionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	action := message.Actions[0]
 	switch action.Name {
-	case actionSelect:
+	case commands.HeyActionSelect:
 		value := action.SelectedOptions[0].Value
 
 		// Overwrite original drop down message.
@@ -69,14 +69,14 @@ func (h interactionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		originalMessage.Attachments[0].Text = fmt.Sprintf("OK to order %s ?", strings.Title(value))
 		originalMessage.Attachments[0].Actions = []slackAPI.AttachmentAction{
 			{
-				Name:  actionStart,
+				Name:  commands.HeyActionStart,
 				Text:  "Yes",
 				Type:  "button",
 				Value: "start",
 				Style: "primary",
 			},
 			{
-				Name:  actionCancel,
+				Name:  commands.HeyActionCancel,
 				Text:  "No",
 				Type:  "button",
 				Style: "danger",
@@ -87,11 +87,11 @@ func (h interactionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(&originalMessage)
 		return
-	case actionStart:
+	case commands.HeyActionStart:
 		title := ":ok: your order was submitted! yay!"
 		responseMessage(w, message.OriginalMessage, title, "")
 		return
-	case actionCancel:
+	case commands.HeyActionCancel:
 		title := fmt.Sprintf(":x: @%s canceled the request", message.User.Name)
 		responseMessage(w, message.OriginalMessage, title, "")
 		return

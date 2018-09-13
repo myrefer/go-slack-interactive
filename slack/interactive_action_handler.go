@@ -3,16 +3,17 @@ package slack
 import (
 	api "github.com/nlopes/slack"
 	"log"
-	"strings"
+	"net/http"
 )
 
 // A InteractiveActionHandler responds to an Message
 type InteractiveActionHandler interface {
-	ServeInteractiveAction(*api.MessageEvent, *api.Client)
+	ServeInteractiveAction(*api.AttachmentActionCallback, http.ResponseWriter)
 }
 
 type ServeInteractiveActionMux struct {
-	m map[string]interactiveActionMuxEntry
+	m          map[string]interactiveActionMuxEntry
+	callbackID string
 }
 
 type interactiveActionMuxEntry struct {
@@ -20,20 +21,18 @@ type interactiveActionMuxEntry struct {
 	pattern string
 }
 
-func NewServeInteractiveActionMux() *ServeInteractiveActionMux { return new(ServeInteractiveActionMux) }
+func NewServeInteractiveActionMux(callbackID string) *ServeInteractiveActionMux {
+	mux := new(ServeInteractiveActionMux)
+	mux.callbackID = callbackID
+	return mux
+}
 
 var DefaultServeInteractiveActionMux = &defaultServeInteractiveActionMux
 
 var defaultServeInteractiveActionMux ServeInteractiveActionMux
 
 func (mux *ServeInteractiveActionMux) match(text string) (h InteractiveActionHandler, pattern string) {
-	// Parse message
-	cmd := strings.Split(strings.TrimSpace(text), " ")[1:]
-	if len(cmd) == 0 {
-		return
-	}
-
-	v, ok := mux.m[cmd[0]]
+	v, ok := mux.m[pattern]
 	if ok {
 		return v.h, v.pattern
 	}
@@ -41,12 +40,13 @@ func (mux *ServeInteractiveActionMux) match(text string) (h InteractiveActionHan
 	return
 }
 
-func (mux *ServeInteractiveActionMux) InteractiveActionHandler(ev *api.MessageEvent, client *api.Client) (h InteractiveActionHandler, pattern string) {
-	log.Printf("[INFO] message is %s", ev.Msg.Text)
-	h, pattern = mux.match(ev.Msg.Text)
+func (mux *ServeInteractiveActionMux) InteractiveActionHandler(callback *api.AttachmentActionCallback, w http.ResponseWriter) (h InteractiveActionHandler, pattern string) {
+	action := callback.Actions[0]
+	log.Printf("[INFO] callback is %s", action.Name)
+	h, pattern = mux.match(action.Name)
 
 	if h == nil {
-		log.Printf("[INFO] not found pattern for %s", ev.Msg.Text)
+		log.Printf("[INFO] not found pattern for %s", action.Name)
 		h, pattern = InteractiveActionNotFoundHandler(), ""
 	}
 
@@ -70,23 +70,21 @@ func (mux *ServeInteractiveActionMux) Handle(pattern string, handler Interactive
 	mux.m[pattern] = interactiveActionMuxEntry{h: handler, pattern: pattern}
 }
 
-func (mux *ServeInteractiveActionMux) ServeInteractiveAction(ev *api.MessageEvent, client *api.Client) {
-	h, _ := mux.InteractiveActionHandler(ev, client)
-	h.ServeInteractiveAction(ev, client)
+func (mux *ServeInteractiveActionMux) ServeInteractiveAction(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
+	h, _ := mux.InteractiveActionHandler(callback, w)
+	h.ServeInteractiveAction(callback, w)
 }
 
-type InteractiveActionHandlerFunc func(ev *api.MessageEvent, client *api.Client)
+type InteractiveActionHandlerFunc func(callback *api.AttachmentActionCallback, w http.ResponseWriter)
 
 // ServeInteractiveAction calls f(w, r).
-func (f InteractiveActionHandlerFunc) ServeInteractiveAction(ev *api.MessageEvent, client *api.Client) {
-	f(ev, client)
+func (f InteractiveActionHandlerFunc) ServeInteractiveAction(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
+	f(callback, w)
 }
 
-func InteractiveActionNotFound(ev *api.MessageEvent, client *api.Client) {
-	params := api.NewPostMessageParameters()
-	if _, _, err := client.PostMessage(ev.Channel, "Command not found :innocent:", params); err != nil {
-		log.Printf("[ERROR] failed to post message: %s", err)
-	}
+func InteractiveActionNotFound(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
+	log.Printf("[ERROR] ]Invalid callback was submitteds")
+	w.WriteHeader(http.StatusInternalServerError)
 }
 
 func InteractiveActionNotFoundHandler() InteractiveActionHandler {

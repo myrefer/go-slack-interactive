@@ -31,6 +31,11 @@ var DefaultServeInteractiveActionMux = &defaultServeInteractiveActionMux
 
 var defaultServeInteractiveActionMux ServeInteractiveActionMux
 
+// TODO: For debug
+func (mux *ServeInteractiveActionMux) Map() map[string]interactiveActionMuxEntry {
+	return mux.m
+}
+
 func (mux *ServeInteractiveActionMux) match(name string) (h InteractiveActionHandler, pattern string) {
 	v, ok := mux.m[name]
 	if ok {

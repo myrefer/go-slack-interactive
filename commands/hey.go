@@ -21,18 +21,19 @@ const (
 
 type Hey struct {
 	callbackID string
-	mux        slack.ServeInteractiveActionMux
+	mux        *slack.ServeInteractiveActionMux
 }
 
 func NewHey(callbackID string) *Hey {
-	h := new(Hey)
-	h.callbackID = callbackID
+	return &Hey{callbackID: callbackID, mux: NewServeInteractiveActionMux(callbackID)}
+}
 
+func NewServeInteractiveActionMux(callbackID string) *slack.ServeInteractiveActionMux {
 	mux := slack.NewServeInteractiveActionMux(callbackID)
 	mux.Handle("select", slack.InteractiveActionHandlerFunc(actionSelect))
 	mux.Handle("start", slack.InteractiveActionHandlerFunc(actionStart))
 	mux.Handle("cancel", slack.InteractiveActionHandlerFunc(actionCancel))
-	return h
+	return mux
 }
 
 func (hey *Hey) ServeMessage(ev *api.MessageEvent, client *api.Client) {
@@ -97,6 +98,7 @@ func (hey *Hey) ServeMessage(ev *api.MessageEvent, client *api.Client) {
 }
 
 func (hey *Hey) ServeInteractiveAction(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
+	log.Printf("count %d", len(hey.mux.Map()))
 	hey.mux.ServeInteractiveAction(callback, w)
 }
 

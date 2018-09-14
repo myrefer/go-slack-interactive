@@ -52,11 +52,6 @@ func (h interactionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if callback.CallbackID != commands.HeyCallbackID {
-		log.Printf("[ERROR] Invalid callbackId: %s", callback.CallbackID)
-		return
-	}
-
-	hey := commands.NewHey(callback.CallbackID)
+	hey := commands.NewHeyServeInteractiveActionMux(callback.CallbackID)
 	hey.ServeInteractiveAction(&callback, w)
 }

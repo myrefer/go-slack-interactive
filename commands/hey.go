@@ -10,13 +10,10 @@ import (
 	"strings"
 )
 
-// TODO: Can I use namespace ? like below:
-// HeyAction.Select
 const (
-	HeyCallbackID   = "beer"
-	HeyActionSelect = "select"
-	HeyActionStart  = "start"
-	HeyActionCancel = "cancel"
+	actionSelectName = "select"
+	actionStartName  = "start"
+	actionCancelName = "cancel"
 )
 
 type Hey struct {
@@ -25,15 +22,7 @@ type Hey struct {
 }
 
 func NewHey(callbackID string) *Hey {
-	return &Hey{callbackID: callbackID, mux: NewServeInteractiveActionMux(callbackID)}
-}
-
-func NewServeInteractiveActionMux(callbackID string) *slack.ServeInteractiveActionMux {
-	mux := slack.NewServeInteractiveActionMux(callbackID)
-	mux.Handle("select", slack.InteractiveActionHandlerFunc(actionSelect))
-	mux.Handle("start", slack.InteractiveActionHandlerFunc(actionStart))
-	mux.Handle("cancel", slack.InteractiveActionHandlerFunc(actionCancel))
-	return mux
+	return &Hey{callbackID: callbackID, mux: NewHeyServeInteractiveActionMux(callbackID)}
 }
 
 func (hey *Hey) ServeMessage(ev *api.MessageEvent, client *api.Client) {
@@ -43,7 +32,7 @@ func (hey *Hey) ServeMessage(ev *api.MessageEvent, client *api.Client) {
 		Color:      "#f9a41b",
 		Actions: []api.AttachmentAction{
 			{
-				Name: HeyActionSelect,
+				Name: actionSelectName,
 				Type: "select",
 				Options: []api.AttachmentActionOption{
 					{
@@ -78,7 +67,7 @@ func (hey *Hey) ServeMessage(ev *api.MessageEvent, client *api.Client) {
 			},
 
 			{
-				Name:  HeyActionCancel,
+				Name:  actionCancelName,
 				Text:  "Cancel",
 				Type:  "button",
 				Style: "danger",
@@ -97,9 +86,13 @@ func (hey *Hey) ServeMessage(ev *api.MessageEvent, client *api.Client) {
 	}
 }
 
-func (hey *Hey) ServeInteractiveAction(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
-	log.Printf("count %d", len(hey.mux.Map()))
-	hey.mux.ServeInteractiveAction(callback, w)
+// interactive actions
+func NewHeyServeInteractiveActionMux(callbackID string) *slack.ServeInteractiveActionMux {
+	mux := slack.NewServeInteractiveActionMux(callbackID)
+	mux.Handle("select", slack.InteractiveActionHandlerFunc(actionSelect))
+	mux.Handle("start", slack.InteractiveActionHandlerFunc(actionStart))
+	mux.Handle("cancel", slack.InteractiveActionHandlerFunc(actionCancel))
+	return mux
 }
 
 func actionSelect(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
@@ -111,14 +104,14 @@ func actionSelect(callback *api.AttachmentActionCallback, w http.ResponseWriter)
 	originalMessage.Attachments[0].Text = fmt.Sprintf("OK to order %s ?", strings.Title(value))
 	originalMessage.Attachments[0].Actions = []api.AttachmentAction{
 		{
-			Name:  HeyActionStart,
+			Name:  actionStartName,
 			Text:  "Yes",
 			Type:  "button",
 			Value: "start",
 			Style: "primary",
 		},
 		{
-			Name:  HeyActionCancel,
+			Name:  actionCancelName,
 			Text:  "No",
 			Type:  "button",
 			Style: "danger",

@@ -31,11 +31,6 @@ var DefaultServeInteractiveActionMux = &defaultServeInteractiveActionMux
 
 var defaultServeInteractiveActionMux ServeInteractiveActionMux
 
-// TODO: For debug
-func (mux *ServeInteractiveActionMux) Map() map[string]interactiveActionMuxEntry {
-	return mux.m
-}
-
 func (mux *ServeInteractiveActionMux) match(name string) (h InteractiveActionHandler, pattern string) {
 	v, ok := mux.m[name]
 	if ok {
@@ -46,8 +41,11 @@ func (mux *ServeInteractiveActionMux) match(name string) (h InteractiveActionHan
 }
 
 func (mux *ServeInteractiveActionMux) InteractiveActionHandler(callback *api.AttachmentActionCallback, w http.ResponseWriter) (h InteractiveActionHandler, pattern string) {
+	if mux.callbackID != callback.CallbackID {
+		h, pattern = InvalidCallbackIDHandler(), ""
+	}
+
 	action := callback.Actions[0]
-	log.Printf("[INFO] callback is %s %d", action.Name, len(mux.m))
 	h, pattern = mux.match(action.Name)
 
 	if h == nil {
@@ -73,7 +71,6 @@ func (mux *ServeInteractiveActionMux) Handle(pattern string, handler Interactive
 		mux.m = make(map[string]interactiveActionMuxEntry)
 	}
 	mux.m[pattern] = interactiveActionMuxEntry{h: handler, pattern: pattern}
-	log.Printf("[INFO] add pattern %s (%d)", pattern, len(mux.m))
 }
 
 func (mux *ServeInteractiveActionMux) ServeInteractiveAction(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
@@ -89,10 +86,19 @@ func (f InteractiveActionHandlerFunc) ServeInteractiveAction(callback *api.Attac
 }
 
 func InteractiveActionNotFound(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
-	log.Printf("[ERROR] ]Invalid callback was submitteds")
+	log.Printf("[ERROR] Invalid callback was submitteds")
 	w.WriteHeader(http.StatusInternalServerError)
 }
 
 func InteractiveActionNotFoundHandler() InteractiveActionHandler {
 	return InteractiveActionHandlerFunc(InteractiveActionNotFound)
+}
+
+func InvalidCallbackID(callback *api.AttachmentActionCallback, w http.ResponseWriter) {
+	log.Printf("[ERROR] Invalid callback id")
+	w.WriteHeader(http.StatusInternalServerError)
+}
+
+func InvalidCallbackIDHandler() InteractiveActionHandler {
+	return InteractiveActionHandlerFunc(InvalidCallbackID)
 }

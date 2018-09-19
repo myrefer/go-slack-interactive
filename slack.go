@@ -11,9 +11,8 @@ import (
 )
 
 type SlackListener struct {
-	client    *api.Client
-	botID     string
-	channelID string
+	client *api.Client
+	botID  string
 }
 
 // LstenAndResponse listens slack events and response
@@ -37,12 +36,6 @@ func (s *SlackListener) ListenAndResponse() {
 
 // handleMesageEvent handles message events.
 func (s *SlackListener) handleMessageEvent(ev *api.MessageEvent) error {
-	// Only response in specific channel. Ignore else.
-	if ev.Channel != s.channelID {
-		log.Printf("%s %s", ev.Channel, ev.Msg.Text)
-		return nil
-	}
-
 	// Only response mention to bot. Ignore else.
 	if !strings.HasPrefix(ev.Msg.Text, fmt.Sprintf("<@%s> ", s.botID)) {
 		return nil

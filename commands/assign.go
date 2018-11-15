@@ -32,7 +32,7 @@ func assigner() string {
 }
 
 func extructTarget(text string) string {
-	re := regexp.MustCompile(`\s+(.+)$`)
+	re := regexp.MustCompile(`assign\s+(.+)$`)
 	match := re.FindStringSubmatch(text)
 	if len(match) == 0 {
 		return ""

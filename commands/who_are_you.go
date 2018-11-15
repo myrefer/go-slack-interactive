@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"fmt"
 	api "github.com/nlopes/slack"
 	"log"
 	"math/rand"

@@ -15,8 +15,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1
 	params.EscapeText = false
-	url := extructURL(ev.Text)
-	message := fmt.Sprintf("おめでとうございます :tada: <@%s> が %s のレビュアーだよ ", assigner(), url)
+	message := fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったよ！", assigner(), extructTarget(ev.Text))
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("failed to post message: %s", err)
 	}
@@ -32,8 +31,8 @@ func assigner() string {
 	return mem[rand.Intn(len(mem))]
 }
 
-func extructURL(text string) string {
-	re := regexp.MustCompile(`^(http|https)://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$`)
+func extructTarget(text string) string {
+	re := regexp.MustCompile(`\s+(.+)$`)
 	match := re.FindStringSubmatch(text)
 	if len(match) == 0 {
 		return ""

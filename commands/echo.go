@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"fmt"
 	api "github.com/nlopes/slack"
 	"log"
 	"math/rand"
@@ -15,7 +16,8 @@ func Echo(ev *api.MessageEvent, client *api.Client) {
 	params.LinkNames = 1
 	params.EscapeText = false
 	text := parse(ev.Text)
-	if _, _, err := client.PostMessage(ev.Channel, text, params); err != nil {
+	message := fmt.Sprintf("%s _via_ _%s_", text, ev.User)
+	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("failed to post message: %s", err)
 	}
 

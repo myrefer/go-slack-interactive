@@ -15,7 +15,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1
 	params.EscapeText = false
-	message := fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったよ！", assigner(), extructTarget(ev.Text))
+	message := fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる :ok-women:", assigner(), extructTarget(ev.Text))
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("failed to post message: %s", err)
 	}

@@ -24,7 +24,7 @@ func Proxy(ev *api.MessageEvent, client *api.Client) {
 }
 
 func parse(text string) (string, string) {
-	re := regexp.MustCompile(`proxy\s+(.+)\s+(.+)$`)
+	re := regexp.MustCompile(`proxy\s+(.+)\s+#(.+)$`)
 	match := re.FindStringSubmatch(text)
 	if len(match) < 2 {
 		return "", ""

@@ -46,7 +46,7 @@ func (s *SlackListener) handleMessageEvent(ev *api.MessageEvent) error {
 	mux.Handle("hey", commands.NewHey("beer"))
 	mux.Handle("ping", slack.MessageHandlerFunc(commands.Ping))
 	mux.Handle("assign", slack.MessageHandlerFunc(commands.Assign))
-	mux.Handle("proxy", slack.MessageHandlerFunc(commands.Proxy))
+	mux.Handle("echo", slack.MessageHandlerFunc(commands.Echo))
 	mux.Handle("あんた誰", slack.MessageHandlerFunc(commands.WhoAreYou))
 	mux.ServeMessage(ev, s.client)
 

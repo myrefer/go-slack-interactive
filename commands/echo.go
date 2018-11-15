@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func Proxy(ev *api.MessageEvent, client *api.Client) {
+func Echo(ev *api.MessageEvent, client *api.Client) {
 	rand.Seed(time.Now().Unix())
 
 	params := api.NewPostMessageParameters()

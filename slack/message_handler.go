@@ -42,7 +42,7 @@ func (mux *ServeMessageMux) match(text string) (h MessageHandler, pattern string
 }
 
 func (mux *ServeMessageMux) MessageHandler(ev *api.MessageEvent, client *api.Client) (h MessageHandler, pattern string) {
-	log.Printf("[INFO] message is %s", ev.Msg.Text)
+	log.Printf("[INFO] message is %s (via %s)", ev.Msg.Text, ev.User)
 	h, pattern = mux.match(ev.Msg.Text)
 
 	if h == nil {

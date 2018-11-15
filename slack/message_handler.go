@@ -85,13 +85,13 @@ func (f MessageHandlerFunc) ServeMessage(ev *api.MessageEvent, client *api.Clien
 func CommandNotFound(ev *api.MessageEvent, client *api.Client) {
 	params := api.NewPostMessageParameters()
 	message := `
-		そのコマンドはわからないまる :innocent:
-		したのコマンド一覧から選んで欲しいまる！
+	そのコマンドはわからないまる :innocent:
+	したのコマンド一覧から選んで欲しいまる！
 
-		# コマンド一覧
-		- hey : ビールの願いを聞き受けるまる。
-		- ping  : pong と返事するまる。
-		- assign [URL/文章] : 指定したURLや文章をエンジニアにアサインするまる。
+	# コマンド一覧
+	- hey : ビールの願いを聞き受けるまる。
+	- ping  : pong と返事するまる。
+	- assign [URL/文章] : 指定したURLや文章をエンジニアにアサインするまる。
 	`
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("[ERROR] failed to post message: %s", err)

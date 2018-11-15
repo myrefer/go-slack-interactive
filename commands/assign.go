@@ -15,7 +15,8 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1
 	params.EscapeText = false
-	message := fmt.Sprintf("おめでとうございます :tada: <@%s> が https://www.pivotaltracker.com/story/show/%s のレビュアーです。", assigner(), extructPID(ev.Text))
+	url := extructURL(ev.Text)
+	message := fmt.Sprintf("おめでとうございます :tada: <@%s> が %s のレビュアーだよ ", assigner(), url)
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("failed to post message: %s", err)
 	}
@@ -31,8 +32,8 @@ func assigner() string {
 	return mem[rand.Intn(len(mem))]
 }
 
-func extructPID(text string) string {
-	re := regexp.MustCompile(`\s+#(\d+)`)
+func extructURL(text string) string {
+	re := regexp.MustCompile(`^(http|https)://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$`)
 	match := re.FindStringSubmatch(text)
 	if len(match) == 0 {
 		return ""

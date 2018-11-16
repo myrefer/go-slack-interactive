@@ -3,6 +3,7 @@ package commands
 import (
 	api "github.com/nlopes/slack"
 	"log"
+	"time"
 
 	"github.com/kelseyhightower/envconfig"
 
@@ -34,8 +35,14 @@ func Takeout(ev *api.MessageEvent, client *api.Client) {
 		log.Fatalf("Unable to retrieve Sheets client: %v", err)
 	}
 
+	user, err := client.GetUserInfo(ev.User)
+	if err != nil {
+		log.Fatalf("Unable to retrieve Sheets client: %v", err)
+		return
+	}
+
 	var vr sheets.ValueRange
-	vr.Values = append(vr.Values, []interface{}{"abc"})
+	vr.Values = append(vr.Values, []interface{}{time.Now(), user.Profile.RealName, user.Profile.Email, ev.Text})
 
 	_, err = srv.Spreadsheets.Values.Append(env.SpreadSheetID, "A1", &vr).
 		ValueInputOption("RAW").

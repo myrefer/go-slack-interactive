@@ -1,2 +1,4 @@
 .envrc
 bot
+credentials.json
+vendor

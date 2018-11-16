@@ -57,6 +57,18 @@
   branch = "master"
   name = "github.com/nlopes/slack"
 
+[[constraint]]
+  branch = "master"
+  name = "golang.org/x/net"
+
+[[constraint]]
+  branch = "master"
+  name = "golang.org/x/oauth2"
+
+[[constraint]]
+  branch = "master"
+  name = "google.golang.org/api"
+
 [metadata.heroku]
   root-package = "github.com/myrefer/go-slack-interactive"
   go-version = "1.11.0"

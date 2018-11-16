@@ -17,7 +17,8 @@ import (
 )
 
 type envConfig struct {
-	Credentials string `envconfig:"EQUIPMENT_MANAGEMENT_CREDENTIALS" required:"true"`
+	Credentials   string `envconfig:"EQUIPMENT_MANAGEMENT_CREDENTIALS" required:"true"`
+	SpreadSheetID string `envconfig:"EQUIPMENT_MANAGEMENT_SPREAD_SHEET_ID" required:"true"`
 }
 
 func Takeout(ev *api.MessageEvent, client *api.Client) {
@@ -26,10 +27,9 @@ func Takeout(ev *api.MessageEvent, client *api.Client) {
 		log.Fatalf("[ERROR] Failed to process env var: %s", err)
 	}
 
-	// If modifying these scopes, delete your previously saved token.json.
 	config, err := google.ConfigFromJSON(
 		[]byte(env.Credentials),
-		"https://www.googleapis.com/auth/spreadsheets.readonly",
+		"https://www.googleapis.com/auth/spreadsheets",
 	)
 	if err != nil {
 		log.Fatalf("Unable to parse client secret file to config: %v", err)
@@ -41,23 +41,15 @@ func Takeout(ev *api.MessageEvent, client *api.Client) {
 		log.Fatalf("Unable to retrieve Sheets client: %v", err)
 	}
 
-	// Prints the names and majors of students in a sample spreadsheet:
-	// https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-	spreadsheetId := "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
-	readRange := "Class Data!A2:E"
-	resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
+	var vr sheets.ValueRange
+	vr.Values = append(vr.Values, []interface{}{"abc"})
+
+	_, err = srv.Spreadsheets.Values.Append(env.SpreadSheetID, "A1", &vr).
+		ValueInputOption("RAW").
+		InsertDataOption("INSERT_ROWS").
+		Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve data from sheet: %v", err)
-	}
-
-	if len(resp.Values) == 0 {
-		fmt.Println("No data found.")
-	} else {
-		fmt.Println("Name, Major:")
-		for _, row := range resp.Values {
-			// Print columns A and E, which correspond to indices 0 and 4.
-			fmt.Printf("%s, %s\n", row[0], row[4])
-		}
 	}
 }
 

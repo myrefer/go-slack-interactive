@@ -2,6 +2,22 @@
 
 
 [[projects]]
+  digest = "1:dd029f90457e0bc0fc4a549a241327bdcac1f2a36692041a19ef02aec4c36103"
+  name = "cloud.google.com/go"
+  packages = ["compute/metadata"]
+  pruneopts = ""
+  revision = "74b12019e2aa53ec27882158f59192d7cd6d1998"
+  version = "v0.33.1"
+
+[[projects]]
+  digest = "1:3dd078fda7500c341bc26cfbc6c6a34614f295a2457149fc1045cab767cbcf18"
+  name = "github.com/golang/protobuf"
+  packages = ["proto"]
+  pruneopts = ""
+  revision = "aa810b61a9c79d51363740d207bb46cf8e620ed5"
+  version = "v1.2.0"
+
+[[projects]]
   branch = "master"
   digest = "1:b560068fe1b2907513665705d2a000cdd014f90b43a48356698ff17f9b57f702"
   name = "github.com/kelseyhightower/envconfig"
@@ -21,9 +37,59 @@
   branch = "master"
   digest = "1:c8fbd9133380cfc35c5a0f33063d498bf504eb2395367ec1c15a677abaeab5e2"
   name = "golang.org/x/net"
-  packages = ["websocket"]
+  packages = [
+    "context",
+    "context/ctxhttp",
+    "websocket",
+  ]
   pruneopts = ""
   revision = "84f0e6f92b10139f986b1756e149a7d9de270cdc"
+
+[[projects]]
+  branch = "master"
+  digest = "1:51d339a1d79f5c617fba14414aefb7dfd184b8ba0ddbb9f95251430b67c8aab8"
+  name = "golang.org/x/oauth2"
+  packages = [
+    ".",
+    "google",
+    "internal",
+    "jws",
+    "jwt",
+  ]
+  pruneopts = ""
+  revision = "f42d05182288abf10faef86d16c0d07b8d40ea2d"
+
+[[projects]]
+  branch = "master"
+  digest = "1:9d8463f4fe9e21db9353dd9dc8bcd6a1e11edfc51b5e1959c4d9a38013777828"
+  name = "google.golang.org/api"
+  packages = [
+    "gensupport",
+    "googleapi",
+    "googleapi/internal/uritemplates",
+    "sheets/v4",
+  ]
+  pruneopts = ""
+  revision = "83a9d304b1e613fc253e1e2710778642fe81af53"
+
+[[projects]]
+  digest = "1:77d3cff3a451d50be4b52db9c7766c0d8570ba47593f0c9dc72173adb208e788"
+  name = "google.golang.org/appengine"
+  packages = [
+    ".",
+    "internal",
+    "internal/app_identity",
+    "internal/base",
+    "internal/datastore",
+    "internal/log",
+    "internal/modules",
+    "internal/remote_api",
+    "internal/urlfetch",
+    "urlfetch",
+  ]
+  pruneopts = ""
+  revision = "4a4468ece617fc8205e99368fa2200e9d1fad421"
+  version = "v1.3.0"
 
 [solve-meta]
   analyzer-name = "dep"
@@ -31,6 +97,10 @@
   input-imports = [
     "github.com/kelseyhightower/envconfig",
     "github.com/nlopes/slack",
+    "golang.org/x/net/context",
+    "golang.org/x/oauth2",
+    "golang.org/x/oauth2/google",
+    "google.golang.org/api/sheets/v4",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

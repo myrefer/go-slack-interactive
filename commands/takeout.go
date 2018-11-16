@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	api "github.com/nlopes/slack"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"

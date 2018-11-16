@@ -1,1 +1,1 @@
-worker: bot
+web: bot

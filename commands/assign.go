@@ -31,13 +31,9 @@ func normal() float64 {
 	return rand.NormFloat64()*2.0 + 4.0
 }
 
-func uniform(left int, right int) float64 {
-	return float64(left) + normal()*float64(right-left)
-}
-
 func assigner() string {
 	mem := members()
-	return mem[int(uniform(0, len(mem)))]
+	return mem[int(normal()*1234567890)%len(mem)]
 }
 
 func extructTarget(text string) string {

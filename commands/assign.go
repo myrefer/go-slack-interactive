@@ -26,9 +26,18 @@ func members() []string {
 	return []string{"eccyan", "ai", "yuji.ueda", "ueshima", "yabu", "tkatagiri", "iizuka.daisuke"}
 }
 
+func normal() float64 {
+	// Avg. assigned MR in a week, Std-dev ± 2
+	return rand.NormFloat64()*2.0 + 4.0
+}
+
+func uniform(left int, right int) float64 {
+	return float64(left) + normal()*float64(right-left)
+}
+
 func assigner() string {
 	mem := members()
-	return mem[rand.Intn(len(mem))]
+	return mem[int(uniform(0, len(mem)))]
 }
 
 func extructTarget(text string) string {

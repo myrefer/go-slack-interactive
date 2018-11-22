@@ -29,7 +29,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	params.LinkNames = 1
 	params.EscapeText = false
 
-	text, err := parse(ev.Text)
+	text, err := parseParams(ev.Text)
 	if err != OK {
 		message := fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {
@@ -43,7 +43,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 
 }
 
-func members(caltegory string) ([]string, int) {
+func members(caltegory tring) ([]string, int) {
 	switch category {
 	case APL:
 		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke"}, OK
@@ -68,7 +68,7 @@ func assigner(caltegory string) string {
 	return mem[int(normal()*1234567890)%len(mem)]
 }
 
-func parse(text string) ([]string, int) {
+func parseParams(text string) ([]string, int) {
 	re := regexp.MustCompile(`assign\s+(.+)$`)
 	match := re.FindStringSubmatch(text)
 	if len(match) != 3 {

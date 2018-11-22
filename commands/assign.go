@@ -37,9 +37,10 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 		assigner, err := assigner(text[1])
 		if err != OK {
 			message = fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
+		} else {
+			target := text[2]
+			message = fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
 		}
-		target := text[2]
-		message = fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
 	}
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("failed to post message: %s", err)

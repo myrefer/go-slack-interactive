@@ -49,8 +49,10 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 }
 
 func members(category string) ([]string, int) {
+	log.Printf(category)
 	switch category {
 	case APL:
+		log.Printf("aaaa")
 		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke"}, OK
 	case FRONT:
 		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "ueshima", "yabu"}, OK

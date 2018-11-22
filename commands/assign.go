@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
+	"strconv"
 	"strings"
 	"time"
 
@@ -74,7 +75,7 @@ func assigner(category string) (string, int) {
 		return "", err
 	}
 	calc := int(normal()*1234567890) % len(mem)
-	log.Printf((string)calc)
+	log.Printf(strconv.Itoa(calc))
 	return mem[int(normal()*1234567890)%len(mem)], err
 }
 

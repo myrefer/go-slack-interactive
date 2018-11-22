@@ -28,14 +28,15 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1
 	params.EscapeText = false
+	message := null
 
 	text, err := parseParams(ev.Text)
 	if err != OK {
-		message := fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
+		message = fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {
 		assigner := text[1]
 		target := text[2]
-		message := fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
+		message = fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
 	}
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("failed to post message: %s", err)
@@ -43,7 +44,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 
 }
 
-func members(caltegory tring) ([]string, int) {
+func members(caltegory string) ([]string, int) {
 	switch category {
 	case APL:
 		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke"}, OK

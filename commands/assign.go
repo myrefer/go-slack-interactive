@@ -67,7 +67,7 @@ func normal() float64 {
 	return rand.NormFloat64()*2.0 + 4.0
 }
 
-func assigner(category string) string {
+func assigner(category string) (string, int) {
 	mem, err := members(category)
 	return mem[int(normal()*1234567890)%len(mem)], err
 }

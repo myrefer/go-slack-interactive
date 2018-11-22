@@ -31,9 +31,6 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	var message string
 
 	text, err := parseParams(ev.Text)
-	log.Printf(text[0])
-	log.Printf(text[1])
-	log.Printf(text[2])
 	if err != OK {
 		message = fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {
@@ -73,6 +70,9 @@ func normal() float64 {
 
 func assigner(category string) (string, int) {
 	mem, err := members(category)
+	if err != OK {
+		return nil, err
+	}
 	return mem[int(normal()*1234567890)%len(mem)], err
 }
 

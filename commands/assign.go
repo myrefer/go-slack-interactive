@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"regexp"
+	"strings"
 	"time"
 
 	api "github.com/nlopes/slack"
@@ -77,8 +77,7 @@ func assigner(category string) (string, int) {
 }
 
 func parseParams(text string) ([]string, int) {
-	re := regexp.MustCompile(`assign\s+(.+)\s+(.+)$`)
-	match := re.FindStringSubmatch(text)
+	match, err := strings.Split(test, " ")
 
 	return match, OK
 }

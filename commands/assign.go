@@ -77,7 +77,8 @@ func assigner(category string) (string, int) {
 }
 
 func parseParams(text string) ([]string, int) {
-	match := strings.Split(text, " ")
+	match := strings.Fields(text)
+	log.Printf("[test]" + match[1])
 	if len(match) < 2 {
 		return nil, NG
 	}

@@ -31,7 +31,9 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	var message string
 
 	text, err := parseParams(ev.Text)
-	log.Printf(text)
+	log.Printf(text[0])
+	log.Printf(text[1])
+	log.Printf(text[2])
 	if err != OK {
 		message = fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {

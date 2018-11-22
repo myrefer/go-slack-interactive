@@ -28,7 +28,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1
 	params.EscapeText = false
-	message := null
+	message := nil
 
 	text, err := parseParams(ev.Text)
 	if err != OK {
@@ -44,7 +44,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 
 }
 
-func members(caltegory string) ([]string, int) {
+func members(category string) ([]string, int) {
 	switch category {
 	case APL:
 		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke"}, OK

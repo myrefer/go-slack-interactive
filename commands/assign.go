@@ -73,7 +73,8 @@ func assigner(category string) (string, int) {
 	if err != OK {
 		return "", err
 	}
-	fmt.Printf(int(normal()*1234567890) % len(mem))
+	calc := int(normal()*1234567890) % len(mem)
+	fmt.Printf((string)calc)
 	return mem[int(normal()*1234567890)%len(mem)], err
 }
 

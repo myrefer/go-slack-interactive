@@ -71,7 +71,7 @@ func normal() float64 {
 func assigner(category string) (string, int) {
 	mem, err := members(category)
 	if err != OK {
-		return nil, err
+		return "", err
 	}
 	return mem[int(normal()*1234567890)%len(mem)], err
 }

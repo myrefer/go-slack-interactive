@@ -75,7 +75,7 @@ func assigner(category string) (string, int) {
 func parseParams(text string) ([]string, int) {
 	re := regexp.MustCompile(`assign\s+(.+)$`)
 	match := re.FindStringSubmatch(text)
-	if len(match) != 3 {
+	if len(match) != 4 {
 		return nil, NG
 	}
 

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"strconv"
 	"strings"
 	"time"
 
@@ -74,14 +73,12 @@ func assigner(category string) (string, int) {
 	if err != OK {
 		return "", err
 	}
-	calc := int(normal()*1234567890) % len(mem)
-	log.Printf(strconv.Itoa(calc))
 	return mem[int(normal()*1234567890)%len(mem)], err
 }
 
 func parseParams(text string) ([]string, int) {
 	match := strings.Fields(text)
-	if len(match) < 2 {
+	if len(match) < 3 {
 		return nil, NG
 	}
 	return match, OK

@@ -34,11 +34,11 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	if err != OK {
 		message = fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {
-		assigner, err := assigner(text[1])
+		assigner, err := assigner(text[2])
 		if err != OK {
 			message = fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 		} else {
-			target := text[2]
+			target := text[3]
 			message = fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
 		}
 	}
@@ -78,7 +78,6 @@ func assigner(category string) (string, int) {
 
 func parseParams(text string) ([]string, int) {
 	match := strings.Fields(text)
-	log.Printf("[test]" + match[1])
 	if len(match) < 2 {
 		return nil, NG
 	}

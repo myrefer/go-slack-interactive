@@ -30,6 +30,7 @@ type envConfig struct {
 }
 
 func main() {
+	log.Printf("[INFO] Start slack event listening!!!")
 	os.Exit(_main(os.Args[1:]))
 }
 

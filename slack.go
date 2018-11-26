@@ -37,7 +37,7 @@ func (s *SlackListener) ListenAndResponse() {
 // handleMesageEvent handles message events.
 func (s *SlackListener) handleMessageEvent(ev *api.MessageEvent) error {
 	// Only response mention to bot. Ignore else.
-	log.Printf(ev.Msg.Text)
+	log.Printf(s.botID)
 	if !strings.HasPrefix(ev.Msg.Text, fmt.Sprintf("<@%s> ", s.botID)) {
 		log.Printf("out")
 		return nil

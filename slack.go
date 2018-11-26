@@ -40,7 +40,7 @@ func (s *SlackListener) handleMessageEvent(ev *api.MessageEvent) error {
 	log.Printf(ev.Msg.Text)
 	if !strings.HasPrefix(ev.Msg.Text, fmt.Sprintf("<@%s> ", s.botID)) {
 		log.Printf("out")
-		//return nil
+		return nil
 	}
 
 	// Parse message

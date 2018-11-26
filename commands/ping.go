@@ -2,11 +2,13 @@ package commands
 
 import (
 	"fmt"
-	api "github.com/nlopes/slack"
 	"log"
+
+	api "github.com/nlopes/slack"
 )
 
 func Ping(ev *api.MessageEvent, client *api.Client) {
+	log.Printf("ping")
 
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1

@@ -48,6 +48,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 
 }
 
+// test
 func members(category string) ([]string, int) {
 	switch category {
 	case APL:

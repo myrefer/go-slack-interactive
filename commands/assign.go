@@ -40,7 +40,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 			message = fmt.Sprintf("< assign [ apl | front | back | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 		} else {
 			target := text[3]
-			message = fmt.Sprintf("やったね <%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
+			message = fmt.Sprintf("やったね <!%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
 		}
 	}
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {

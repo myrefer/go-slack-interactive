@@ -40,7 +40,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 			message = fmt.Sprintf("< assign [ apl | front | back | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 		} else {
 			target := text[3]
-			message = fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
+			message = fmt.Sprintf("やったね <%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
 		}
 	}
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
@@ -53,15 +53,15 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 func members(category string) ([]string, int) {
 	switch category {
 	case APL:
-		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke"}, OK
+		return []string{"U5NHXB5T7", "U0A1HHDQR", "U06G2DMP1", "UC1H5MTRV"}, OK
 	case FRONT:
-		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "ueshima", "yabu"}, OK
+		return []string{"U5NHXB5T7", "U0A1HHDQR", "U06G2DMP1", "UC1H5MTRV", "U073ZTJS3", "UBHSQJ82E"}, OK
 	case BACK:
-		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu"}, OK
+		return []string{"U5NHXB5T7", "U0A1HHDQR", "U06G2DMP1", "UC1H5MTRV", "UBHSQJ82E"}, OK
 	case INTERVIEW:
-		return []string{"ai", "yuji.ueda", "ueshima", "yabu"}, OK
+		return []string{"U5NHXB5T7", "U0A1HHDQR", "U073ZTJS3", "UBHSQJ82E"}, OK
 	case ALL:
-		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu", "ueshima"}, OK
+		return []string{"U5NHXB5T7", "U0A1HHDQR", "U06G2DMP1", "UC1H5MTRV", "UBHSQJ82E", "U073ZTJS3"}, OK
 	default:
 		return nil, NG
 	}

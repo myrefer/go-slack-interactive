@@ -11,10 +11,11 @@ import (
 )
 
 const (
-	APL   = "apl"
-	FRONT = "front"
-	BACK  = "back"
-	ALL   = "all"
+	APL       = "apl"
+	FRONT     = "front"
+	BACK      = "back"
+	ALL       = "all"
+	INTERVIEW = "interview"
 )
 
 const (
@@ -32,11 +33,11 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 
 	text, err := parseParams(ev.Text)
 	if err != OK {
-		message = fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
+		message = fmt.Sprintf("< assign [ apl | front | back | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {
 		assigner, err := assigner(text[2])
 		if err != OK {
-			message = fmt.Sprintf("< assign [ apl | front | back | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
+			message = fmt.Sprintf("< assign [ apl | front | back | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 		} else {
 			target := text[3]
 			message = fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
@@ -57,6 +58,8 @@ func members(category string) ([]string, int) {
 		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "ueshima", "yabu"}, OK
 	case BACK:
 		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu"}, OK
+	case INTERVIEW:
+		return []string{"ai", "yuji.ueda", "ueshima", "yabu"}, OK
 	case ALL:
 		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu", "ueshima"}, OK
 	default:

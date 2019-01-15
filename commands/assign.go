@@ -61,7 +61,7 @@ func members(category string) ([]string, int) {
 	case INTERVIEW:
 		return []string{"ai", "yuji.ueda", "ueshima", "yabu"}, OK
 	case ALL:
-		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu", "ueshima", "中山優", "Norihiro Mori"}, OK
+		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu", "ueshima", "hitoshi.kato", "中山優", "Norihiro Mori", "Takafumi Kawano"}, OK
 	default:
 		return nil, NG
 	}

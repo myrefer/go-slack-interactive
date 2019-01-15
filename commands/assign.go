@@ -53,15 +53,15 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 func members(category string) ([]string, int) {
 	switch category {
 	case APL:
-		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke"}, OK
+		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "Takafumi Kawano"}, OK
 	case FRONT:
-		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "ueshima", "yabu"}, OK
+		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "ueshima", "yabu", "hitoshi.kato", "中山優", "Norihiro Mori"}, OK
 	case BACK:
-		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu"}, OK
+		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu", "Norihiro Mori", "中山優", "Takafumi Kawano"}, OK
 	case INTERVIEW:
 		return []string{"ai", "yuji.ueda", "ueshima", "yabu"}, OK
 	case ALL:
-		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu", "ueshima"}, OK
+		return []string{"ai", "yuji.ueda", "tkatagiri", "iizuka.daisuke", "yabu", "ueshima", "中山優", "Norihiro Mori"}, OK
 	default:
 		return nil, NG
 	}

@@ -23,6 +23,19 @@ const (
 	NG = 1
 )
 
+const (
+	UEDA      = "U0A1HHDQR"
+	SUMIYOSHI = "U5NHXB5T7"
+	UESHIMA   = "U073ZTJS3"
+	YABUSHITA = "UBHSQJ82E"
+	NAKAYAMA  = "UF790B4H5"
+	KATAGIRI  = "U06G2DMP1"
+	IIZUKA    = "UC1H5MTRV"
+	KATO      = "UE75GQMFB"
+	KAWANO    = "UF7J5SKT5"
+	MORI      = "UE75GQMFB"
+)
+
 func Assign(ev *api.MessageEvent, client *api.Client) {
 	rand.Seed(time.Now().Unix())
 
@@ -53,15 +66,15 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 func members(category string) ([]string, int) {
 	switch category {
 	case APL:
-		return []string{"U5NHXB5T7", "U0A1HHDQR", "U06G2DMP1", "UC1H5MTRV"}, OK
+		return []string{UEDA, SUMIYOSHI, KATAGIRI, IIZUKA, KAWANO}, OK
 	case FRONT:
-		return []string{"U5NHXB5T7", "U0A1HHDQR", "U06G2DMP1", "UC1H5MTRV", "U073ZTJS3", "UBHSQJ82E"}, OK
+		return []string{UEDA, SUMIYOSHI, UESHIMA, KATAGIRI, IIZUKA, KATO, MORI}, OK
 	case BACK:
-		return []string{"U5NHXB5T7", "U0A1HHDQR", "U06G2DMP1", "UC1H5MTRV", "UBHSQJ82E"}, OK
+		return []string{UEDA, SUMIYOSHI, YABUSHITA, NAKAYAMA, KATAGIRI, IIZUKA, MORI, KAWANO}, OK
 	case INTERVIEW:
-		return []string{"U5NHXB5T7", "U0A1HHDQR", "U073ZTJS3", "UBHSQJ82E"}, OK
+		return []string{UEDA, SUMIYOSHI, UESHIMA, YABUSHITA}, OK
 	case ALL:
-		return []string{"U5NHXB5T7", "U0A1HHDQR", "U06G2DMP1", "UC1H5MTRV", "UBHSQJ82E", "U073ZTJS3"}, OK
+		return []string{UEDA, SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, IIZUKA, KATO, MORI, KAWANO}, OK
 	default:
 		return nil, NG
 	}

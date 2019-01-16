@@ -33,7 +33,7 @@ const (
 	IIZUKA    = "UC1H5MTRV"
 	KATO      = "UE75GQMFB"
 	KAWANO    = "UF7J5SKT5"
-	MORI      = "UE75GQMFB"
+	MORI      = "UF7HXU4HH"
 )
 
 func Assign(ev *api.MessageEvent, client *api.Client) {

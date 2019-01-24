@@ -49,7 +49,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	if err != OK {
 		message = fmt.Sprintf("< assign [ apl | front | back | release | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {
-		assigner, err := assigner(text[2])
+		assigner, err := assigner(text[2],ev.User)
 		if err != OK {
 			message = fmt.Sprintf("< assign [ apl | front | back | release | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 		} else {
@@ -88,12 +88,16 @@ func normal() float64 {
 	return rand.NormFloat64()*2.0 + 4.0
 }
 
-func assigner(category string) (string, int) {
+func assigner(category string, user string) (string, int) {
 	mem, err := members(category)
 	if err != OK {
 		return "", err
 	}
-	return mem[int(normal()*1234567890)%len(mem)], err
+	reviewer := mem[int(normal()*1234567890)%len(mem)];
+	if reviewer == user {
+		reviewer = assigner(category string, user string)
+	}
+	return reviewer, err
 }
 
 func parseParams(text string) ([]string, int) {

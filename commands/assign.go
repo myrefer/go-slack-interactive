@@ -95,7 +95,7 @@ func assigner(category string, user string) (string, int) {
 	}
 	reviewer := mem[int(normal()*1234567890)%len(mem)]
 	if reviewer == user {
-		reviewer = assigner(category, user)
+		reviewer, err = assigner(category, user)
 	}
 	return reviewer, err
 }

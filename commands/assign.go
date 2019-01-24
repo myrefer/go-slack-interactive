@@ -49,7 +49,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	if err != OK {
 		message = fmt.Sprintf("< assign [ apl | front | back | release | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {
-		assigner, err := assigner(text[2],ev.User)
+		assigner, err := assigner(text[2], ev.User)
 		if err != OK {
 			message = fmt.Sprintf("< assign [ apl | front | back | release | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 		} else {
@@ -93,9 +93,9 @@ func assigner(category string, user string) (string, int) {
 	if err != OK {
 		return "", err
 	}
-	reviewer := mem[int(normal()*1234567890)%len(mem)];
+	reviewer := mem[int(normal()*1234567890)%len(mem)]
 	if reviewer == user {
-		reviewer = assigner(category string, user string)
+		reviewer = assigner(category, user)
 	}
 	return reviewer, err
 }

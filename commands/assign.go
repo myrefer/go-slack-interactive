@@ -11,12 +11,12 @@ import (
 )
 
 const (
-	APL       = "apl"
-	FRONT     = "front"
-	BACK      = "back"
-	ALL       = "all"
-	RELEASE   = "release"
-	INTERVIEW = "interview"
+	APL      = "apl"
+	FRONT    = "front"
+	BACK     = "back"
+	ALL      = "all"
+	RELEASE  = "release"
+	TECHPERM = "tech-perm"
 )
 
 const (
@@ -47,11 +47,11 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 
 	text, err := parseParams(ev.Text)
 	if err != OK {
-		message = fmt.Sprintf("< assign [ apl | front | back | release | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
+		message = fmt.Sprintf("< assign [ apl | front | back | release | tech-perm | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {
 		assigner, err := assigner(text[2], ev.User)
 		if err != OK {
-			message = fmt.Sprintf("< assign [ apl | front | back | release | interview | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
+			message = fmt.Sprintf("< assign [ apl | front | back | release | tech-perm | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 		} else {
 			target := text[3]
 			message = fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる", assigner, target)
@@ -72,8 +72,8 @@ func members(category string) ([]string, int) {
 		return []string{UEDA, SUMIYOSHI, UESHIMA, KATAGIRI, IIZUKA, KATO, MORI}, OK
 	case BACK:
 		return []string{UEDA, SUMIYOSHI, YABUSHITA, NAKAYAMA, KATAGIRI, IIZUKA, MORI, KAWANO}, OK
-	case INTERVIEW:
-		return []string{UEDA, SUMIYOSHI, UESHIMA, YABUSHITA}, OK
+	case TECHPERM:
+		return []string{UEDA, SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA}, OK
 	case RELEASE:
 		return []string{UEDA, SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA}, OK
 	case ALL:

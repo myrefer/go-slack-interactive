@@ -25,7 +25,7 @@ const (
 )
 
 const (
-	UEDA      = "U0A1HHDQR"
+	UTSUMI    = "UHH4RL0GM"
 	SUMIYOSHI = "U5NHXB5T7"
 	UESHIMA   = "U073ZTJS3"
 	YABUSHITA = "UBHSQJ82E"
@@ -67,17 +67,17 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 func members(category string) ([]string, int) {
 	switch category {
 	case APL:
-		return []string{UEDA, SUMIYOSHI, KATAGIRI, IIZUKA, KAWANO}, OK
+		return []string{SUMIYOSHI, KATAGIRI, IIZUKA, KAWANO}, OK
 	case FRONT:
-		return []string{UEDA, SUMIYOSHI, UESHIMA, KATAGIRI, IIZUKA, KATO, MORI}, OK
+		return []string{SUMIYOSHI, UESHIMA, KATAGIRI, IIZUKA, KATO, MORI, UTSUMI}, OK
 	case BACK:
-		return []string{UEDA, SUMIYOSHI, YABUSHITA, NAKAYAMA, KATAGIRI, IIZUKA, MORI, KAWANO}, OK
+		return []string{SUMIYOSHI, YABUSHITA, NAKAYAMA, KATAGIRI, IIZUKA, MORI, KAWANO}, OK
 	case TECHPERM:
-		return []string{UEDA, SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA}, OK
+		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, UTSUMI}, OK
 	case RELEASE:
-		return []string{UEDA, SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA}, OK
+		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, UTSUMI}, OK
 	case ALL:
-		return []string{UEDA, SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, IIZUKA, KATO, MORI, KAWANO}, OK
+		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, IIZUKA, KATO, MORI, KAWANO, UTSUMI}, OK
 	default:
 		return nil, NG
 	}

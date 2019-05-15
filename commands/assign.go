@@ -68,7 +68,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 func members(category string) ([]string, int) {
 	switch category {
 	case APL:
-		return []string{SUMIYOSHI, KATAGIRI, IIZUKA, KAWANO}, OK
+		return []string{SUMIYOSHI, KATAGIRI, KAWANO}, OK
 	case FRONT:
 		return []string{SUMIYOSHI, UESHIMA, KATAGIRI, IIZUKA, KATO, UTSUMI}, OK
 	case BACK:

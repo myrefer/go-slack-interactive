@@ -76,7 +76,7 @@ func members(category string) ([]string, int) {
 	case TECHPERM:
 		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, UTSUMI, TOZAKI}, OK
 	case RELEASE:
-		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, UTSUMI}, OK
+		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, UTSUMI, TOZAKI}, OK
 	case ALL:
 		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, IIZUKA, KATO, MORI, KAWANO, UTSUMI, TOZAKI}, OK
 	default:

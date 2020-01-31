@@ -11,7 +11,8 @@ import (
 )
 
 const (
-	APL      = "apl"
+	IOS      = "ios"
+	ANDROID  = "android"
 	FRONT    = "front"
 	BACK     = "back"
 	ALL      = "all"
@@ -48,11 +49,11 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 
 	text, err := parseParams(ev.Text)
 	if err != OK {
-		message = fmt.Sprintf("< assign [ apl | front | back | release | tech-perm | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
+		message = fmt.Sprintf("< assign [ android | ios | front | back | release | tech-perm | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 	} else {
 		assigner, err := assigner(text[2], ev.User)
 		if err != OK {
-			message = fmt.Sprintf("< assign [ apl | front | back | release | tech-perm | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
+			message = fmt.Sprintf("< assign [ android | ios | front | back | release | tech-perm | all ] レビュー対象 > のフォーマットで話しかけてほしいまる")
 		} else {
 			target := text[3]
 			message = fmt.Sprintf("やったね <@%s> ちゃん :tada: %s のレビュアーになったまる!", assigner, target)
@@ -67,7 +68,9 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 // test
 func members(category string) ([]string, int) {
 	switch category {
-	case APL:
+	case IOS:
+		return []string{SUMIYOSHI, KATAGIRI, KAWANO, XUAN}, OK
+	case ANDROID:
 		return []string{SUMIYOSHI, KATAGIRI, KAWANO, XUAN}, OK
 	case FRONT:
 		return []string{SUMIYOSHI, UESHIMA, KATAGIRI, ITO, KATO, CHIBA}, OK

@@ -34,7 +34,7 @@ const (
 	KATO      = "UE75GQMFB"
 	KAWANO    = "UF7J5SKT5"
 	XUAN      = "UMGNWL329"
-	ITO       = "UN4TDT6RK"
+	TOKUNAGA  = "USC6UBULE"
 	CHIBA     = "UN4T6F14G"
 	YOSHIDA   = "UNK9NQ41Z"
 )
@@ -73,7 +73,7 @@ func members(category string) ([]string, int) {
 	case ANDROID:
 		return []string{SUMIYOSHI, KATAGIRI, KAWANO, XUAN}, OK
 	case FRONT:
-		return []string{SUMIYOSHI, UESHIMA, KATAGIRI, ITO, KATO, CHIBA}, OK
+		return []string{SUMIYOSHI, UESHIMA, KATAGIRI, ITO, KATO, CHIBA, TOKUNAGA}, OK
 	case BACK:
 		return []string{SUMIYOSHI, YABUSHITA, NAKAYAMA, KATAGIRI, YOSHIDA}, OK
 	case TECHPERM:
@@ -81,7 +81,7 @@ func members(category string) ([]string, int) {
 	case RELEASE:
 		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA}, OK
 	case ALL:
-		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, KAWANO, XUAN, ITO, CHIBA, YOSHIDA}, OK
+		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, KAWANO, XUAN, CHIBA, YOSHIDA, TOKUNAGA}, OK
 	default:
 		return nil, NG
 	}

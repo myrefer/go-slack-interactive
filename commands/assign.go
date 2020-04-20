@@ -38,6 +38,8 @@ const (
 	MORI      = "UUQAEJABA"
 	NAGAHARA  = "UUCS31K9R"
 	AOKI      = "UUE7DFJ65"
+	YANBE     = "U8WA4JY7N"
+	SATO      = "UNYKNHP5M"
 )
 
 func Assign(ev *api.MessageEvent, client *api.Client) {

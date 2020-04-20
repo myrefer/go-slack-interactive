@@ -43,8 +43,8 @@ func Kpt(ev *api.MessageEvent, client *api.Client) {
 	mentionA := generateMention(teamA)
 	mentionB := generateMention(teamB)
 
-	messageA := fmt.Sprintf("今日のKPTのチームAは %s まる！ ファシリテーターは <%s> まる！", mentionA, facilitatorA)
-	messageB := fmt.Sprintf("今日のKPTのチームBは %s まる！ ファシリテーターは <%s> まる！", mentionB, facilitatorB)
+	messageA := fmt.Sprintf("今日のKPTのチームAは %s まる！ ファシリテーターは <@%s> まる！", mentionA, facilitatorA)
+	messageB := fmt.Sprintf("今日のKPTのチームBは %s まる！ ファシリテーターは <@%s> まる！", mentionB, facilitatorB)
 
 	if _, _, err := client.PostMessage(ev.Channel, messageA, params); err != nil {
 		log.Printf("failed to post message: %s", err)

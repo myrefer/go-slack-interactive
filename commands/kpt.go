@@ -1,10 +1,19 @@
 package commands
 
+import (
+	"fmt"
+	"log"
+	"math/rand"
+	"strings"
+
+	api "github.com/nlopes/slack"
+)
+
 func Kpt(ev *api.MessageEvent, client *api.Client) {
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1
 	params.EscapeText = false
-	
+
 	member := []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, KAWANO, CHIBA, TOKUNAGA, NAGAHARA, AOKI, MORI, YANBE, SATO}
 
 	perm := []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, TOKUNAGA}

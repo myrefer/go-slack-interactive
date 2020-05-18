@@ -47,6 +47,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1
 	params.EscapeText = false
+
 	var message string
 
 	text, err := parseParams(ev.Text)

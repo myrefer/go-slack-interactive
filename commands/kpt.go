@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"strings"
 	"time"
 
 	api "github.com/nlopes/slack"
 )
 
 func Kpt(ev *api.MessageEvent, client *api.Client) {
+
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1
 	params.EscapeText = false
@@ -19,41 +19,17 @@ func Kpt(ev *api.MessageEvent, client *api.Client) {
 
 	perm := []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, TOKUNAGA}
 
-	var teamA []string
-	var teamB []string
-	var facilitatorA string
-	var facilitatorB string
-	var result bool
+	facilitator := choice(perm)
+	secretary := assignSecretary(member, facilitator)
 
-	for {
-		shuffle(member)
-		teamA = member[0 : len(member)/2]
-		teamB = member[len(member)/2:]
-		facilitatorA, result = assignFacilitatior(teamA, perm)
-		if !result {
-			continue
-		}
-		facilitatorB, result = assignFacilitatior(teamB, perm)
-		if !result {
-			continue
-		}
-		break
-	}
+	message := fmt.Sprintf("今日のKPTのファシリテーターは %s まる！ 書記は <@%s> まる！", facilitator, secretary)
 
-	mentionA := generateMention(teamA)
-	mentionB := generateMention(teamB)
-
-	messageA := fmt.Sprintf("今日のKPTのチームAは %s まる！ ファシリテーターは <@%s> まる！", mentionA, facilitatorA)
-	messageB := fmt.Sprintf("今日のKPTのチームBは %s まる！ ファシリテーターは <@%s> まる！", mentionB, facilitatorB)
-
-	if _, _, err := client.PostMessage(ev.Channel, messageA, params); err != nil {
-		log.Printf("failed to post message: %s", err)
-	}
-	if _, _, err := client.PostMessage(ev.Channel, messageB, params); err != nil {
+	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("failed to post message: %s", err)
 	}
 }
 
+/**
 func shuffle(data []string) {
 	rand.Seed(time.Now().UnixNano())
 	for i := range data {
@@ -61,7 +37,9 @@ func shuffle(data []string) {
 		data[i], data[j] = data[j], data[i]
 	}
 }
+*/
 
+/**
 func assignFacilitatior(team []string, perms []string) (string, bool) {
 	candidates := []string{}
 	for _, member := range team {
@@ -78,6 +56,7 @@ func assignFacilitatior(team []string, perms []string) (string, bool) {
 
 	return facilitator, true
 }
+*/
 
 func choice(s []string) string {
 	rand.Seed(time.Now().UnixNano())
@@ -85,6 +64,15 @@ func choice(s []string) string {
 	return s[i]
 }
 
+func assignSecretary(s []string, facilitator string) string {
+	secretary := choice(s)
+	if secretary == facilitator {
+		secretary := choice(s)
+	}
+	return secretary
+}
+
+/**
 func generateMention(team []string) string {
 	var list []string
 	for _, mem := range team {
@@ -93,3 +81,4 @@ func generateMention(team []string) string {
 	message := strings.Join(list[:], " ")
 	return message
 }
+*/

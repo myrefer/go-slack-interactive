@@ -22,7 +22,7 @@ func Kpt(ev *api.MessageEvent, client *api.Client) {
 	facilitator := choice(perm)
 	secretary := assignSecretary(member, facilitator)
 
-	message := fmt.Sprintf("今日のKPTのファシリテーターは %s まる！ 書記は <@%s> まる！", facilitator, secretary)
+	message := fmt.Sprintf("今日のKPTのファシリテーターは <@%s> まる！ 書記は <@%s> まる！", facilitator, secretary)
 
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("failed to post message: %s", err)

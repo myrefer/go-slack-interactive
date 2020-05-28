@@ -3,8 +3,6 @@ package commands
 import (
 	"fmt"
 	"log"
-	"math/rand"
-	"time"
 
 	api "github.com/nlopes/slack"
 )
@@ -24,12 +22,6 @@ func Release(ev *api.MessageEvent, client *api.Client) {
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
 		log.Printf("failed to post message: %s", err)
 	}
-}
-
-func choice(s []string) string {
-	rand.Seed(time.Now().UnixNano())
-	i := rand.Intn(len(s))
-	return s[i]
 }
 
 func assign(s []string) (string, string, string) {

@@ -27,9 +27,9 @@ func Release(ev *api.MessageEvent, client *api.Client) {
 func assign(s []string) (string, string, string) {
 	web := choice(s)
 	ios := choice(s)
-	android := choise(s)
+	android := choice(s)
 	if web == ios || web == android || ios == android {
-		web, ios, android = assign(perm)
+		web, ios, android = assign(s)
 	}
 	return web, ios, android
 }

@@ -15,7 +15,7 @@ func Kpt(ev *api.MessageEvent, client *api.Client) {
 	params.LinkNames = 1
 	params.EscapeText = false
 
-	member := []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, TOKUNAGA, NAGAHARA, AOKI, MORI, YANBE, SATO}
+	member := []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, TOKUNAGA, NAGAHARA, MORI, YANBE, SATO}
 
 	perm := []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, TOKUNAGA}
 

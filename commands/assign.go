@@ -34,7 +34,6 @@ const (
 	KATO      = "UE75GQMFB"
 	TOKUNAGA  = "USC6UBULE"
 	MORI      = "UUQAEJABA"
-	NAGAHARA  = "UUCS31K9R"
 	YANBE     = "U8WA4JY7N"
 	SATO      = "UNYKNHP5M"
 )
@@ -76,13 +75,13 @@ func members(category string) ([]string, int) {
 	case FRONT:
 		return []string{UESHIMA, KATO, TOKUNAGA}, OK
 	case BACK:
-		return []string{SUMIYOSHI, YABUSHITA, NAKAYAMA, KATAGIRI, NAGAHARA}, OK
+		return []string{SUMIYOSHI, YABUSHITA, NAKAYAMA, KATAGIRI}, OK
 	case TECHPERM:
 		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, TOKUNAGA}, OK
 	case RELEASE:
 		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, TOKUNAGA}, OK
 	case ALL:
-		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, TOKUNAGA, NAGAHARA, MORI}, OK
+		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, TOKUNAGA, MORI}, OK
 	default:
 		return nil, NG
 	}

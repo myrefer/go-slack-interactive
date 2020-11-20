@@ -15,7 +15,7 @@ func Kpt(ev *api.MessageEvent, client *api.Client) {
 	params.LinkNames = 1
 	params.EscapeText = false
 
-	member := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KATAGIRI, KATO, TOKUNAGA, MORI, YANBE, SATO, KAMINAGA, TAKADA}
+	member := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KATAGIRI, TOKUNAGA, MORI, YANBE, KAMINAGA, TAKADA}
 
 	perm := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, TOKUNAGA, KAMINAGA}
 
@@ -71,14 +71,3 @@ func assignSecretary(s []string, facilitator string) string {
 	}
 	return secretary
 }
-
-/**
-func generateMention(team []string) string {
-	var list []string
-	for _, mem := range team {
-		list = append(list, "<@"+mem+">")
-	}
-	message := strings.Join(list[:], " ")
-	return message
-}
-*/

@@ -38,6 +38,8 @@ const (
 	SATO      = "UNYKNHP5M"
 	KAMINAGA  = "U016XJ1JZ5M"
 	TAKADA    = "U018V17MFQ8"
+	TOUYAMA   = "U01DC7YBZMM"
+	IDA       = "U01DPT4C00M"
 )
 
 func Assign(ev *api.MessageEvent, client *api.Client) {
@@ -77,13 +79,13 @@ func members(category string) ([]string, int) {
 	case FRONT:
 		return []string{UESHIMA, KATO, TOKUNAGA, KAMINAGA}, OK
 	case BACK:
-		return []string{SUMIYOSHI, YABUSHITA, NAKAYAMA, KATAGIRI}, OK
+		return []string{SUMIYOSHI, YABUSHITA, NAKAYAMA, KATAGIRI, TOUYAMA, IDA}, OK
 	case TECHPERM:
 		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, TOKUNAGA, KAMINAGA}, OK
 	case RELEASE:
 		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, TOKUNAGA}, OK
 	case ALL:
-		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, TOKUNAGA, MORI, KAMINAGA, YANBE, TAKADA}, OK
+		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, TOKUNAGA, MORI, KAMINAGA, YANBE, TAKADA, TOUYAMA, IDA}, OK
 	default:
 		return nil, NG
 	}

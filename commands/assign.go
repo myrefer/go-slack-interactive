@@ -16,7 +16,6 @@ const (
 	FRONT    = "front"
 	BACK     = "back"
 	ALL      = "all"
-	RELEASE  = "release"
 	TECHPERM = "tech-perm"
 )
 
@@ -89,7 +88,7 @@ func members(category string) ([]string, int) {
 }
 
 func normal() float64 {
-	// Avg. assigned MR in a week, Std-dev ± 2
+	// Avg.  assigned MR in a week, Std-dev ± 2
 	return rand.NormFloat64()*2.0 + 4.0
 }
 

@@ -52,6 +52,7 @@ func (s *SlackListener) handleMessageEvent(ev *api.MessageEvent) error {
 	mux.Handle("takeout", slack.MessageHandlerFunc(commands.Takeout))
 	mux.Handle("あんた誰", slack.MessageHandlerFunc(commands.WhoAreYou))
 	mux.Handle("kpt", slack.MessageHandlerFunc(commands.Kpt))
+	mux.Handle("kpt2", slack.MessageHandlerFunc(commands.Kpt2))
 	mux.Handle("release", slack.MessageHandlerFunc(commands.Release))
 	mux.ServeMessage(ev, s.client)
 

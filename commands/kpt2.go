@@ -48,7 +48,7 @@ func choice(s []string) string {
 func assignSecretary(s []string, facilitator string) string {
 	secretary := choice(s)
 	if secretary == facilitator {
-		secretary = assignSecretary(s)
+		secretary = assignSecretary(s, facilitator)
 	}
 	return secretary
 }

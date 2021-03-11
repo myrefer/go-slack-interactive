@@ -9,20 +9,20 @@ import (
 	api "github.com/nlopes/slack"
 )
 
-var perm []string = []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KAMINAGA, KOSHIMIZU}
-
 func Kpt2(ev *api.MessageEvent, client *api.Client) {
 
 	params := api.NewPostMessageParameters()
 	params.LinkNames = 1
 	params.EscapeText = false
 
-	member := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KATAGIRI, MORI, YANBE, KAMINAGA, TAKADA, TOUYAMA, IDA, KOSHIMIZU, KATO}
+	//member := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KATAGIRI, MORI, YANBE, KAMINAGA, TAKADA, TOUYAMA, IDA, KOSHIMIZU, KATO}
 	//perm := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KAMINAGA, KOSHIMIZU}
 	teamA := []string{YABUSHITA, UESHIMA, KATO, NAKAYAMA, TOUYAMA, YANBE}
+	permA := []string{YABUSHITA, UESHIMA, NAKAYAMA}
 	teamB := []string{SUMIYOSHI, KAMINAGA, KATAGIRI, KOSHIMIZU, TAKADA, MORI}
+	permB := []string{SUMIYOSHI, KAMINAGA, KOSHIMIZU}
 
-	facilitatorA := choice(teamA)
+	facilitatorA := choice(permA)
 	secretaryA := assignSecretary(teamA, facilitatorA)
 
 	message := fmt.Sprintf("今日のKPTのTeamAファシリテーターは <@%s> まる！ 書記は <@%s> まる！", facilitatorA, secretaryA)
@@ -30,7 +30,7 @@ func Kpt2(ev *api.MessageEvent, client *api.Client) {
 		log.Printf("failed to post message: %s", err)
 	}
 
-	facilitatorB := choice(teamB)
+	facilitatorB := choice(permB)
 	secretaryB := assignSecretary(teamB, facilitatorB)
 
 	message = fmt.Sprintf("今日のKPTのTeamAファシリテーターは <@%s> まる！ 書記は <@%s> まる！", facilitatorB, secretaryB)
@@ -42,18 +42,13 @@ func Kpt2(ev *api.MessageEvent, client *api.Client) {
 func choice(s []string) string {
 	rand.Seed(time.Now().UnixNano())
 	i := rand.Intn(len(s))
-	for _, v := range perm {
-		if s[i] == v {
-			return s[i]
-		}
-	}
-	choice(s)
+	return s[i]
 }
 
 func assignSecretary(s []string, facilitator string) string {
 	secretary := choice(s)
 	if secretary == facilitator {
-		secretary = choice(s)
+		secretary = assignSecretary(s)
 	}
 	return secretary
 }

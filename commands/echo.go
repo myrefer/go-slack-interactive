@@ -18,7 +18,7 @@ func Echo(ev *api.MessageEvent, client *api.Client) {
 	text := parse(ev.Text)
 	message := fmt.Sprintf("%s _via_ _%s_", text, ev.User)
 	if _, _, err := client.PostMessage(ev.Channel, message, params); err != nil {
-		log.Printf("failed to post message: %s", err)
+		log.Printf("failed to post message : %s", err)
 	}
 
 }

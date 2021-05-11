@@ -15,7 +15,7 @@ func Kpt(ev *api.MessageEvent, client *api.Client) {
 	params.LinkNames = 1
 	params.EscapeText = false
 
-	member := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KATAGIRI, MORI, YANBE, KAMINAGA, TAKADA, TOUYAMA, KOSHIMIZU}
+	member := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KATAGIRI, YANBE, KAMINAGA, TAKADA, TOUYAMA, KOSHIMIZU}
 
 	perm := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KAMINAGA, KOSHIMIZU}
 
@@ -34,12 +34,12 @@ func Kpt2(ev *api.MessageEvent, client *api.Client) {
 	params.LinkNames = 1
 	params.EscapeText = false
 
-	//member := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KATAGIRI, MORI, YANBE, KAMINAGA, TAKADA, TOUYAMA, IDA, KOSHIMIZU, KATO}
+	//member := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KATAGIRI, YANBE, KAMINAGA, TAKADA, TOUYAMA, IDA, KOSHIMIZU, KATO}
 	//perm := []string{SUMIYOSHI, UESHIMA, NAKAYAMA, KAMINAGA, KOSHIMIZU}
-	teamA := []string{YABUSHITA, UESHIMA, KATO, NAKAYAMA, TOUYAMA, YANBE}
-	permA := []string{YABUSHITA, UESHIMA, NAKAYAMA}
-	teamB := []string{SUMIYOSHI, KAMINAGA, KATAGIRI, KOSHIMIZU, TAKADA, MORI}
-	permB := []string{SUMIYOSHI, KAMINAGA, KOSHIMIZU}
+	teamA := []string{YABUSHITA, UESHIMA, KATO, NAKAYAMA, TOUYAMA, YANBE, KISHIMOTO}
+	permA := []string{YABUSHITA, UESHIMA, NAKAYAMA, KISHIMOTO}
+	teamB := []string{SUMIYOSHI, KAMINAGA, KATAGIRI, KOSHIMIZU, TAKADA, YSATO, MANGOKU}
+	permB := []string{SUMIYOSHI, KAMINAGA, KOSHIMIZU, YSATO, MANGOKU}
 
 	facilitatorA := choice(permA)
 	secretaryA := assignSecretary(teamA, facilitatorA)

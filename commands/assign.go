@@ -41,6 +41,7 @@ const (
 	YSATO     = "U01T0PBUKPV"
 	MANGOKU   = "U01SXET0NBX"
 	MASAKA    = "U021JBF5ETE"
+	KOBAYASHI = "U0211NYR683"
 )
 
 func Assign(ev *api.MessageEvent, client *api.Client) {

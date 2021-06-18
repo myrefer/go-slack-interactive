@@ -79,7 +79,7 @@ func members(category string) ([]string, int) {
 	case ANDROID:
 		return []string{SUMIYOSHI, KATAGIRI, YABUSHITA, NAKAYAMA, TAKADA}, OK
 	case FRONT:
-		return []string{UESHIMA, KATO, KAMINAGA}, OK
+		return []string{UESHIMA, KATO, KAMINAGA, MANGOKU}, OK
 	case BACK:
 		return []string{YABUSHITA, NAKAYAMA, KATAGIRI, TOUYAMA, KISHIMOTO, YSATO}, OK
 	case TECHPERM:

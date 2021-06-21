@@ -13,7 +13,7 @@ func Release(ev *api.MessageEvent, client *api.Client) {
 	params.LinkNames = 1
 	params.EscapeText = false
 
-	perm := []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KAMINAGA, KOSHIMIZU}
+	perm := []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KAMINAGA, KOSHIMIZU, KISHIMOTO, YSATO, MANGOKU}
 
 	web, ios, android := assign(perm)
 

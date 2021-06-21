@@ -75,7 +75,7 @@ func Assign(ev *api.MessageEvent, client *api.Client) {
 func members(category string) ([]string, int) {
 	switch category {
 	case IOS:
-		return []string{SUMIYOSHI, KATAGIRI, YABUSHITA, NAKAYAMA, TAKADA}, OK
+		return []string{SUMIYOSHI, KATAGIRI, YABUSHITA, NAKAYAMA, TAKADA, KOBAYASHI}, OK
 	case ANDROID:
 		return []string{SUMIYOSHI, KATAGIRI, YABUSHITA, NAKAYAMA, TAKADA}, OK
 	case FRONT:
@@ -83,9 +83,9 @@ func members(category string) ([]string, int) {
 	case BACK:
 		return []string{YABUSHITA, NAKAYAMA, KATAGIRI, TOUYAMA, KISHIMOTO, YSATO}, OK
 	case TECHPERM:
-		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KAMINAGA, KOSHIMIZU}, OK
+		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KAMINAGA, KOSHIMIZU, KISHIMOTO, YSATO, MANGOKU, MASAKA}, OK
 	case ALL:
-		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, KAMINAGA, YANBE, TAKADA, TOUYAMA, KOSHIMIZU, KISHIMOTO, SATO, MANGOKU, MASAKA}, OK
+		return []string{SUMIYOSHI, UESHIMA, YABUSHITA, NAKAYAMA, KATAGIRI, KATO, KAMINAGA, YANBE, TAKADA, TOUYAMA, KOSHIMIZU, KISHIMOTO, YSATO, MANGOKU, MASAKA}, OK
 	default:
 		return nil, NG
 	}
